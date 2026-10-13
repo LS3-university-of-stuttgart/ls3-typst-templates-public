@@ -22,9 +22,8 @@ the package name. On your own machine, run
 typst init @preview/ls3-uni-stuttgart-thesis:0.1.0 my-thesis
 ```
 
-Each template's README explains its parameters. The logos are not part
-of the packages. The thesis README links to the official university
-logo, and your supervisor gives you the LS3 logo.
+Each template's README explains its parameters. The University of
+Stuttgart and LS3 logos are included and can be replaced.
 
 ## Font
 
@@ -40,7 +39,8 @@ explains how to test changes and how releases work.
 
 ## License
 
-The templates are MIT licensed, see [LICENSE](LICENSE). The files each
+The templates are MIT licensed, see [LICENSE](LICENSE). The logos
+bundled with them are not, see each template's README. The files each
 template copies into a new project are under MIT-0, so your documents
 carry no license obligations. The TeX Gyre Heros files in `fonts/` are
 under the GUST Font License, see `fonts/LICENSE-GUST-FONT-LICENSE.txt`.

@@ -21,29 +21,29 @@ Then open `main.typ`, fill in your metadata, and write your chapters in
 
 ## Logos
 
-The University of Stuttgart and LS3 logos are not part of this package.
-Until you add them, the cover shows red placeholders.
+The University of Stuttgart logo and the LS3 logo ship with the package
+and appear on the cover without any setup. The cover crops the official
+university logo, drops the "Germany" line of the English version, and
+sets the institute and department below it from `institute` and
+`chair`.
 
-Download the official university logo PDF from the
-[corporate design page](https://www.beschaeftigte.uni-stuttgart.de/uni-services/kommunikation-und-marketing/corporate-design/logo-und-schrift/), in
-[English](https://www.beschaeftigte.uni-stuttgart.de/uni-services/kommunikation-und-marketing/corporate-design/cd-dateien/01_Logo/pdf/unistuttgart_logo_englisch.pdf) or
-[German](https://www.beschaeftigte.uni-stuttgart.de/uni-services/kommunikation-und-marketing/corporate-design/cd-dateien/01_Logo/pdf/unistuttgart_logo_deutsch.pdf). The template crops it,
-drops the "Germany" line of the English logo, and sets the institute
-and department below it from `institute` and `chair`. Ask your
-supervisor for the LS3 logo. Put both into `logos/` and pass them in
-`main.typ`.
+To use a different logo, pass your own file from the project. Pass
+`none` to leave a logo out.
 
 ```typst
 #import "@preview/ls3-uni-stuttgart-thesis:0.1.0": thesis
 
 #show: thesis.with(
-  university-logo: image("logos/unistuttgart_logo_englisch.pdf"),
-  chair-logo: image("logos/ls3_logo.png"),
+  chair-logo: image("my_logo.png"),
   // ...
 )
 ```
 
-`logos/README.md` in the new project walks through the steps.
+A replacement chair logo is set 25mm wide to fit the white disc unless
+you give it a size. A replacement university logo must be one of the
+official PDFs from the
+[corporate design page](https://www.beschaeftigte.uni-stuttgart.de/uni-services/kommunikation-und-marketing/corporate-design/logo-und-schrift/),
+because the crop is measured on them.
 
 ## Font
 
@@ -77,8 +77,8 @@ with `sans-font`. Liberation Sans is a close match.
 | `body-font` | `"sans"` | `"sans"`, or `"serif"` for a LaTeX-like body |
 | `sans-font` | `auto` | Font family or list of families for sans text |
 | `institute`, `chair` | `auto` | Institute and chair, on the cover and the title page |
-| `university-logo` | `auto` | Official university logo PDF, `auto` shows the placeholder |
-| `chair-logo` | `auto` | Cover logo in the white disc |
+| `university-logo` | `auto` | Bundled university logo, an official logo PDF, or `none` |
+| `chair-logo` | `auto` | Bundled LS3 logo in the white disc, any image, or `none` |
 
 ## License
 

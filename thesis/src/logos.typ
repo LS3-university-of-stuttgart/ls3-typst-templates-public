@@ -1,19 +1,17 @@
 // logos.typ
 //
-// Defaults for university-logo: auto and chair-logo: auto. The package
-// bundles no logos. Students download the university logo from the
-// corporate design page, the LS3 logo comes from their supervisor. Until
-// then the cover shows labeled placeholders.
+// Defaults for university-logo: auto and chair-logo: auto. Both logos
+// ship with the package, see the Logos section of README.md for their
+// terms. Users replace them by passing their own image(...).
 
-#let default-university-logo(language) = none
+// Official University of Stuttgart logo, as on the corporate design
+// page, with the editing data stripped. Cropped by university-block.typ.
+#let default-university-logo(language) = {
+  if language == "german" {
+    image("../assets/unistuttgart_logo_deutsch.pdf")
+  } else {
+    image("../assets/unistuttgart_logo_englisch.pdf")
+  }
+}
 
-#let university-placeholder = true
-
-#let default-chair-logo() = rect(
-  width: 25mm,
-  height: 24mm,
-  fill: white,
-  stroke: (paint: rgb(200, 30, 30), thickness: 0.8pt, dash: "dashed"),
-  inset: 2mm,
-  align(center + horizon, text(size: 8pt, fill: rgb(200, 30, 30), [LS3 logo missing])),
-)
+#let default-chair-logo() = image("../assets/ls3_logo.png", width: 25mm)

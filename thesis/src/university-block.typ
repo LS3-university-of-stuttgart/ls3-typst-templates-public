@@ -37,11 +37,9 @@
       logo
     })))
 
-// logo         content, image("...") of the official PDF, or none
-// placeholder  bool, draw a labeled placeholder where the logo goes
+// logo  content, image("...") of the official PDF, or none
 #let university-block(
   logo: none,
-  placeholder: false,
   language: "english",
   institute: "",
   chair: "",
@@ -54,13 +52,6 @@
     // Symbol, then the wordmark band above "Germany".
     place(top + left, _window(logo, scale, 0mm, 0mm, 14.5mm, 13.1mm))
     place(top + left, dx: 14.5mm, _window(logo, scale, 14.5mm, 0mm, 70mm, 9.7mm))
-  } else if placeholder {
-    place(top + left, rect(
-      width: 70mm, height: 9.4mm, fill: white,
-      stroke: (paint: rgb(200, 30, 30), thickness: 0.8pt, dash: "dashed"),
-      align(center + horizon, text(size: 8pt, fill: rgb(200, 30, 30),
-        [University logo missing. See `logos/README.md`])),
-    ))
   }
 
   // Institute and chair, positioned and sized like the earlier institute

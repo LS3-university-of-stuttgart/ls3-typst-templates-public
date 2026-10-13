@@ -1,7 +1,7 @@
 #!/bin/bash
-# Thesis specific checks. The logo crop is tested against the official
-# university PDF, downloaded on the fly because it is not part of this
-# repo. Without network access that check is skipped.
+# Thesis specific checks: the bundled logos render, a replacement
+# university logo must be an official PDF, and replacing either logo
+# compiles.
 
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../scripts/_lib.sh"
@@ -12,25 +12,39 @@ compile() {
   typst compile --package-path "$REPO_ROOT/.dev/packages" --font-path "$REPO_ROOT/fonts" "$@"
 }
 
-work="$TMP/thesis-logos"
-cp -R "$REPO_ROOT/thesis/template" "$work"
+# with_args <name> <line>... copies the template and adds the given
+# lines as the first arguments of thesis.with(...).
+with_args() {
+  local dir="$TMP/thesis-$1"; shift
+  cp -R "$REPO_ROOT/thesis/template" "$dir"
+  local lines="" l
+  for l in "$@"; do lines+="  $l\n"; done
+  awk -v add="$lines" '{ print } /^#show: thesis\.with\($/ && !done { printf "%s", add; done = 1 }' \
+    "$dir/main.typ" > "$dir/main.new" && mv "$dir/main.new" "$dir/main.typ"
+  echo "$dir"
+}
+
+# German cover uses the German logo.
+dir="$(with_args de)"
+sed -E -i.bak 's/^  language: "english",/  language: "german",/' "$dir/main.typ"
+grep -q '^  language: "german",' "$dir/main.typ" || fail "could not switch the template to German"
+compile "$dir/main.typ" "$TMP/de.pdf" >/dev/null 2>&1 || fail "German cover does not compile"
+echo "ok: thesis German cover with bundled logos"
 
 # A PNG university logo must fail with a pointer to the official PDF.
-typst compile --font-path "$REPO_ROOT/fonts" - "$work/dot.png" --format png <<<'#set page(width: 1cm, height: 1cm)' 2>/dev/null
-sed -E -i.bak 's|^  // (university-logo: )image\("logos/unistuttgart_logo_englisch.pdf"\)|  \1image("dot.png")|' "$work/main.typ"
-grep -q '^  university-logo: image("dot.png")' "$work/main.typ" || fail "could not enable the university-logo line"
-if err="$(compile "$work/main.typ" "$TMP/wrong.pdf" 2>&1)"; then
+dir="$(with_args png 'university-logo: image("dot.png"),')"
+typst compile - "$dir/dot.png" --format png <<<'#set page(width: 1cm, height: 1cm)' 2>/dev/null
+if err="$(compile "$dir/main.typ" "$TMP/png.pdf" 2>&1)"; then
   fail "a PNG university logo was accepted"
 fi
 grep -q "official logo PDF" <<<"$err" || fail "PNG logo error does not explain the fix: $err"
-echo "ok: thesis rejects a PNG logo"
+echo "ok: thesis rejects a PNG university logo"
 
-# The official PDF must crop cleanly and compile.
-url="https://www.beschaeftigte.uni-stuttgart.de/uni-services/kommunikation-und-marketing/corporate-design/cd-dateien/01_Logo/pdf/unistuttgart_logo_englisch.pdf"
-if curl -fsSL --max-time 30 -o "$work/logos/unistuttgart_logo_englisch.pdf" "$url"; then
-  sed -E -i.bak 's|image\("dot.png"\)|image("logos/unistuttgart_logo_englisch.pdf")|' "$work/main.typ"
-  compile "$work/main.typ" "$TMP/logo.pdf" >/dev/null 2>&1 || fail "template does not compile with the official logo"
-  echo "ok: thesis compiles with the official university logo"
-else
-  echo "skip: could not download the official logo, crop not tested"
-fi
+# Both logos replaced from the project, and both left out.
+dir="$(with_args replaced 'university-logo: image("uni.pdf"),' 'chair-logo: image("chair.png"),')"
+cp "$REPO_ROOT/thesis/assets/unistuttgart_logo_englisch.pdf" "$dir/uni.pdf"
+typst compile - "$dir/chair.png" --format png <<<'#set page(width: 2cm, height: 2cm, fill: red)' 2>/dev/null
+compile "$dir/main.typ" "$TMP/replaced.pdf" >/dev/null 2>&1 || fail "replaced logos do not compile"
+dir="$(with_args none 'university-logo: none,' 'chair-logo: none,')"
+compile "$dir/main.typ" "$TMP/none.pdf" >/dev/null 2>&1 || fail "cover without logos does not compile"
+echo "ok: thesis logos can be replaced or left out"

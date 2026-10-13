@@ -10,7 +10,7 @@
 // Page is A4 portrait, 210mm x 297mm. Page center is at (105mm, 148.5mm).
 
 #import "common.typ": colors, fonts
-#import "logos.typ": default-university-logo, default-chair-logo, university-placeholder
+#import "logos.typ": default-university-logo, default-chair-logo
 #import "university-block.typ": university-block
 
 // Build the cover page. Called by the thesis() show rule.
@@ -45,7 +45,6 @@
 
   let uni-block = university-block(
     logo: if university-logo == auto { default-university-logo(language) } else { university-logo },
-    placeholder: university-logo == auto and university-placeholder,
     language: language,
     institute: institute,
     chair: chair,

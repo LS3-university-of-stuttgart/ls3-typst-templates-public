@@ -18,9 +18,6 @@
 #show: abbr.show-rule
 
 #show: thesis.with(
-  // Add the university logo download and the LS3 logo, see logos/README.md.
-  // university-logo: image("logos/unistuttgart_logo_englisch.pdf"),
-  // chair-logo: image("logos/ls3_logo.png"),
   title: [On the Optimization and Uncertainty Quantification of Groundwater Models],
   cover-title: [On the Optimization and \ Uncertainty Quantification of \ Groundwater Models],
   author: "Maxime Mustermann",

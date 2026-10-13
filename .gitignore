@@ -1,4 +1,6 @@
 .dev/
 .DS_Store
+# Compiled output. Package assets and template figures are real sources.
 *.pdf
-!thesis/template/assets/*.pdf
+!/*/assets/*.pdf
+!/*/template/assets/*.pdf
