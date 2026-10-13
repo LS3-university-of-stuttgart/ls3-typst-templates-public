@@ -2,7 +2,7 @@
 name = "ls3-uni-stuttgart-thesis"
 version = "0.1.0"
 entrypoint = "lib.typ"
-authors = ["LS3, University of Stuttgart"]
+authors = ["LS3, University of Stuttgart", "Philipp Hofmann <@phil-c137>"]
 license = "MIT AND MIT-0"
 description = "Bachelor's or master's thesis at LS3, University of Stuttgart."
 keywords = ["thesis", "bachelor", "master", "Bachelorarbeit", "Masterarbeit", "LS3", "University of Stuttgart", "Universität Stuttgart", "hydrosystems"]
