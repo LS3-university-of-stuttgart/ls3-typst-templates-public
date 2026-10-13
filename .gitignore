@@ -1,0 +1,4 @@
+.dev/
+.DS_Store
+*.pdf
+!thesis/template/assets/*.pdf

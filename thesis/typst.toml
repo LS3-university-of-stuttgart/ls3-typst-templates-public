@@ -1,0 +1,18 @@
+[package]
+name = "ls3-uni-stuttgart-thesis"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["LS3, University of Stuttgart"]
+license = "MIT AND MIT-0"
+description = "Bachelor's or master's thesis at LS3, University of Stuttgart"
+keywords = ["thesis", "bachelor", "master", "stuttgart", "hydrosystems"]
+categories = ["thesis"]
+disciplines = ["engineering"]
+repository = "https://github.com/LS3-university-of-stuttgart/ls3-typst-templates-public"
+compiler = "0.14.0"
+exclude = ["thumbnail.png"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"
