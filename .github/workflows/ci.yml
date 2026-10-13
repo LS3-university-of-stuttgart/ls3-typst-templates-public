@@ -23,14 +23,14 @@ jobs:
       - name: Compile every template
         run: ./tests/run.sh
 
-  package-check:
-    # Typst's own lint tool, the same check their CI runs on submissions.
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [thesis]
-    steps:
-      - uses: actions/checkout@v4
 
+      # Typst's own lint tool, the same check their CI runs on
+      # submissions. It never downloads dependencies, so it reuses the
+      # package cache the compile step above just filled.
       - name: typst-package-check
-        run: docker run --rm -v "$PWD/${{ matrix.package }}:/data" ghcr.io/typst/package-check check
+        run: |
+          for pkg in $(source scripts/_lib.sh && packages); do
+            echo "== $pkg"
+            docker run --rm -e XDG_CACHE_HOME=/cache -v "$HOME/.cache:/cache" \
+              -v "$PWD/$pkg:/data" ghcr.io/typst/package-check check
+          done
