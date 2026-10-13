@@ -32,6 +32,11 @@ for pkg in $(packages); do
     || err "$pkg" "README.md does not mention @preview/$name:$version"
   grep -qE "^### $version\$" "$dir/README.md" \
     || err "$pkg" "README.md changelog has no '### $version' section"
+  # Universe drops the thumbnail from the bundle, it must not be referenced.
+  thumb="$(sed -En 's/^thumbnail[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/p' "$dir/typst.toml")"
+  if [[ -n "$thumb" ]] && grep -rqF "$thumb" "$dir" --include='*.typ' --include='*.md'; then
+    err "$pkg" "$thumb is referenced in the package, Typst Universe does not allow that"
+  fi
   for f in LICENSE README.md; do
     [[ -f "$dir/$f" ]] || err "$pkg" "$f is missing"
   done

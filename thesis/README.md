@@ -7,8 +7,6 @@ Stuttgart. German or English, two-sided printing, with cover, title
 page, declaration including the AI tools statement, abstracts, and
 front matter.
 
-![Cover page](thumbnail.png)
-
 ## Start a thesis
 
 In the typst.app web app, choose "Start from template" and search for
@@ -36,6 +34,8 @@ supervisor for the LS3 logo. Put both into `logos/` and pass them in
 `main.typ`.
 
 ```typst
+#import "@preview/ls3-uni-stuttgart-thesis:0.1.0": thesis
+
 #show: thesis.with(
   university-logo: image("logos/unistuttgart_logo_englisch.pdf"),
   chair-logo: image("logos/ls3_logo.png"),
@@ -53,6 +53,8 @@ web app has it built in. On your own machine, install it from
 with `sans-font`. Liberation Sans is a close match.
 
 ```typst
+#import "@preview/ls3-uni-stuttgart-thesis:0.1.0": thesis
+
 #show: thesis.with(sans-font: "Liberation Sans", /* ... */)
 ```
 

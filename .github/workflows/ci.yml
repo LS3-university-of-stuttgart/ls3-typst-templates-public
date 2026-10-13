@@ -22,3 +22,15 @@ jobs:
 
       - name: Compile every template
         run: ./tests/run.sh
+
+  package-check:
+    # Typst's own lint tool, the same check their CI runs on submissions.
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [thesis]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: typst-package-check
+        run: docker run --rm -v "$PWD/${{ matrix.package }}:/data" ghcr.io/typst/package-check check

@@ -16,8 +16,8 @@
 //   date                 string
 //   examiners            tuple of strings
 //   supervisors          tuple of strings
-//   institute            auto (resolves from branding), or string
-//   chair                auto (resolves from branding), or string
+//   institute            auto (resolves from language), or string
+//   chair                auto (resolves from language), or string
 //   abstract-en          content, English abstract
 //   abstract-de          content, German abstract
 //   abbreviations        none, or content for the optional abbreviations chapter
@@ -33,7 +33,6 @@
 //                        top left. Cropped automatically, the institute
 //                        and chair lines are set below it.
 //   chair-logo           auto (bundled LS3 logo), none, or content, cover disc
-//   branding             auto (LS3 preset), or a custom branding dict
 
 #import "src/common.typ": branding as default-branding
 
@@ -86,7 +85,6 @@
   sans-font: auto,
   university-logo: auto,
   chair-logo: auto,
-  branding: auto,
   body,
 ) = {
   // Validate language and degree early.
