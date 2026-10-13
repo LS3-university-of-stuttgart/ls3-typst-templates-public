@@ -10,11 +10,14 @@ source "$(dirname "${BASH_SOURCE[0]}")/_lib.sh"
 
 pkg="${1:-}"; clone="${2:-}"
 require_package "$pkg"
-if [[ -z "$clone" || ! -d "$clone/packages/preview" ]]; then
+if [[ -z "$clone" || ! -d "$clone/.git" ]]; then
   echo "usage: $0 <package> <path-to-typst-packages-clone>" >&2
-  echo "the clone needs a packages/preview folder, see CONTRIBUTING.md" >&2
+  echo "the second argument must be a git clone of typst/packages, see CONTRIBUTING.md" >&2
   exit 1
 fi
+# A sparse checkout only has packages/preview while one of our package
+# folders is checked out, so create it when missing.
+mkdir -p "$clone/packages/preview"
 
 tag="$(git -C "$REPO_ROOT" tag -l "$pkg-v*" --sort=-v:refname | head -n1)"
 if [[ -z "$tag" ]]; then
