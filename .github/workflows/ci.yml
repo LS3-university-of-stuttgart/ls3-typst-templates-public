@@ -15,7 +15,7 @@ jobs:
       - name: Install Typst
         uses: typst-community/setup-typst@v3
         with:
-          typst-version: '0.14.x'
+          typst-version: '0.15.x'
 
       - name: Consistency checks
         run: ./scripts/check.sh
