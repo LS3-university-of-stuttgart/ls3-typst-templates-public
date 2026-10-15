@@ -48,3 +48,8 @@ compile "$dir/main.typ" "$TMP/replaced.pdf" >/dev/null 2>&1 || fail "replaced lo
 dir="$(with_args none 'university-logo: none,' 'chair-logo: none,')"
 compile "$dir/main.typ" "$TMP/none.pdf" >/dev/null 2>&1 || fail "cover without logos does not compile"
 echo "ok: thesis logos can be replaced or left out"
+
+# The rule below chapter headings can be switched on.
+dir="$(with_args rule 'heading-rule: true,')"
+compile "$dir/main.typ" "$TMP/rule.pdf" >/dev/null 2>&1 || fail "heading-rule: true does not compile"
+echo "ok: thesis heading rule can be switched on"
