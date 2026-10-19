@@ -3,10 +3,10 @@
 ## Layout
 
 Each top-level folder with a `typst.toml` is one Typst Universe package,
-exactly as it gets published. `thesis/` is the first. Shared brand
-colors and fonts live in `common/brand.typ`. Every package carries a
-copy as `src/common.typ`, because a published package has to be
-self-contained.
+exactly as it gets published, currently `thesis/` and `dissertation/`.
+Shared brand colors and fonts live in `common/brand.typ`. Every package
+carries a copy as `src/common.typ`, because a published package has to
+be self-contained.
 
 ## Work on a template
 
