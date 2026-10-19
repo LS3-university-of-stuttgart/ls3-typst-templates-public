@@ -10,8 +10,10 @@ own version.
 | Template | Package | Purpose |
 | --- | --- | --- |
 | [thesis](thesis/) | `@preview/ls3-uni-stuttgart-thesis` | Bachelor's or master's thesis, German or English |
+| [dissertation](dissertation/) | `@preview/ls3-uni-stuttgart-dissertation` | Doctoral dissertation, A4 manuscript or A5 print |
 
 [<img src="thesis/thumbnail.png" alt="Thesis cover" height="300">](thesis/)
+[<img src="dissertation/thumbnail.png" alt="Dissertation title page" height="300">](dissertation/)
 
 ## Start a document
 
@@ -20,10 +22,12 @@ the package name. On your own machine, run
 
 ```bash
 typst init @preview/ls3-uni-stuttgart-thesis:0.1.0 my-thesis
+typst init @preview/ls3-uni-stuttgart-dissertation:0.1.0 my-dissertation
 ```
 
-Each template's README explains its parameters. The University of
-Stuttgart and LS3 logos are included and can be replaced.
+Each template's README explains its parameters. The thesis includes the
+University of Stuttgart and LS3 logos, which can be replaced. The
+dissertation uses no logos.
 
 ## Font
 
@@ -40,7 +44,7 @@ explains how to test changes and how releases work.
 ## License
 
 The templates are MIT licensed, see [LICENSE](LICENSE). The logos
-bundled with them are not, see each template's README. The files each
+bundled with the thesis are not, see its README. The files each
 template copies into a new project are under MIT-0, so your documents
 carry no license obligations. The TeX Gyre Heros files in `fonts/` are
 under the GUST Font License, see `fonts/LICENSE-GUST-FONT-LICENSE.txt`.
