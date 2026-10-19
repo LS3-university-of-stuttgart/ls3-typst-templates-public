@@ -21,16 +21,26 @@
   if paper == "a5" {
     (
       margin: (x: 18mm, y: 18mm),
-      title-size: 16pt,
+      title-size: 12pt,
       author-size: 12pt,
       body-size: 10pt,
+      committee-size: 9pt,
+      label-width: 44mm,
+      top: 12mm,
+      bottom: 22mm,
     )
   } else {
     (
+      // Sizes and positions follow the title pages of the IWS Hefte,
+      // e.g. Hefte 300 and 305.
       margin: (x: 25mm, y: 25mm),
-      title-size: 20pt,
-      author-size: 14pt,
-      body-size: 12pt,
+      title-size: 17.28pt,
+      author-size: 17.28pt,
+      body-size: 14.4pt,
+      committee-size: 12pt,
+      label-width: 62mm,
+      top: 17mm,
+      bottom: 32mm,
     )
   }
 }
@@ -81,29 +91,31 @@
     numbering: none,
   )
   set text(font: fonts.sans, fill: black, size: m.body-size)
-  set par(leading: 0.65em, justify: false)
+  set par(leading: 0.55em, justify: false)
 
-  let phrase = if degree-phrase == auto { degree-phrases.at(degree) } else { degree-phrase }
+  // Boxed so a line never breaks inside "Doktor-Ingenieurin" or
+  // "(Dr. rer. nat.)".
+  let phrase = box(if degree-phrase == auto { degree-phrases.at(degree) } else { degree-phrase })
   // Promotions through SC SimTech name the Stuttgart Center for
   // Simulation Science next to the faculty, as about a third of the
   // recent IWS Hefte do.
-  let awarding-body = if simtech {
-    [#faculty der Universität Stuttgart und dem Stuttgart Center for Simulation Science]
+  // Line breaks as in the Hefte: after the faculty, and with SimTech
+  // after the Center, the rest wraps naturally.
+  let university = if simtech {
+    [der Universität Stuttgart und dem Stuttgart Center for Simulation Science \ ]
   } else {
-    [#faculty der Universität Stuttgart]
+    [der Universität Stuttgart ]
   }
   let awarding = if awarded-by != auto {
     awarded-by
   } else if status == "submitted" {
     // Wording from the old LaTeX template. The Fakultät 2 title page
     // template only shows "genehmigte Abhandlung".
-    [Bei der Fakultät #awarding-body \
-      zur Erlangung der Würde #phrase \
-      eingereichte Abhandlung]
+    [Bei der Fakultät #faculty \
+      #university;zur Erlangung der Würde #phrase eingereichte Abhandlung]
   } else {
-    [Von der Fakultät #awarding-body \
-      zur Erlangung der Würde #phrase \
-      genehmigte Abhandlung]
+    [Von der Fakultät #faculty \
+      #university;zur Erlangung der Würde #phrase genehmigte Abhandlung]
   }
 
   // Committee rows. All Mitberichter stand below one "Mitberichter:"
@@ -117,34 +129,32 @@
     committee-rows.push((label, [#name]))
   }
 
+  // Centered column with the committee table set flush left, as in the
+  // Hefte. "vorgelegt von" in lower case and the name in bold, also as
+  // in the Hefte. The faculty template capitalizes "Vorgelegt von".
   align(center)[
-    #v(1fr)
+    #v(m.top)
     #text(size: m.title-size, weight: "bold", hyphenate: false)[#title]
-    #v(1fr)
+    #v(6mm)
     #awarding
     #v(1fr)
-    Vorgelegt von
-    #v(4mm)
-    #text(size: m.author-size)[#author]
-    #if birthplace != "" [
-      #v(4mm)
-      aus #birthplace
-    ]
+    vorgelegt von \
+    #text(size: m.author-size, weight: "bold")[#author]
+    #if birthplace != "" [\ aus #birthplace]
     #v(1fr)
-    #grid(
-      columns: 2,
+    #align(left, text(size: m.committee-size, grid(
+      columns: (m.label-width, auto),
       align: (left, left),
-      column-gutter: 10mm,
-      row-gutter: 3.2mm,
+      row-gutter: 3mm,
       ..committee-rows.flatten(),
       ..if status == "accepted" {
-        ([], [], [Tag der mündlichen Prüfung:], [#exam-date])
+        ([], [#v(2.5em)], [Tag der mündlichen Prüfung:], [#exam-date])
       },
-    )
+    )))
     #v(1fr)
-    #institute der Universität Stuttgart
-    #v(4mm)
+    #institute \
+    der Universität Stuttgart \
     #year
-    #v(8mm)
+    #v(m.bottom)
   ]
 }

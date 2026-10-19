@@ -3,9 +3,12 @@
 // Page geometry, fonts, headings, and styling rules for
 // the dissertation. Used by lib.typ. Not a public-facing module.
 //
-// The A4 mode follows the Merkblatt manuscript rules: 12pt body, roughly
-// 1.5 line spacing, margins over 2cm on every side. The A5 mode is the
-// Mitteilungsheft print layout derived from the diss_a5 LaTeX template.
+// The A4 mode follows the Merkblatt manuscript rules: 12pt body, 1.5
+// line spacing, margins over 2cm on every side. Its geometry, running
+// header, and line spacing match the recent IWS Mitteilungshefte, e.g.
+// Hefte 300 and 305 of LS3 and the LH2 Hefte, which print the A4 file
+// scaled to A5. The A5 mode is a print layout derived from the diss_a5
+// LaTeX template.
 
 #import "common.typ": colors, fonts
 #import "@preview/codly:2.0.0" as codly
@@ -17,7 +20,8 @@
   if paper == "a5" {
     (
       paper: "a5",
-      margin: (inside: 22mm, outside: 17mm, top: 20mm, bottom: 22mm),
+      margin: (inside: 22mm, outside: 17mm, top: 26mm, bottom: 24mm),
+      header-ascent: 6mm,
       body-size: 10pt,
       leading: 0.8em,
       par-spacing: 1.2em,
@@ -27,66 +31,100 @@
       h4-size: 10pt,
       h1-above: 1.2cm,
       h1-below: 1cm,
-      corner-size: 8pt,
+      h2-below: 4mm,
+      corner-size: 9pt,
     )
   } else {
     (
       paper: "a4",
-      margin: (inside: 30mm, outside: 25mm, top: 25mm, bottom: 30mm),
+      // 156mm text block with 26mm inside and 28mm outside, body text
+      // from 39mm, header line at about 24mm, as in the IWS Hefte.
+      margin: (inside: 26mm, outside: 28mm, top: 39mm, bottom: 42mm),
+      header-ascent: 10mm,
       body-size: 12pt,
-      // Merkblatt asks for 1.5 line spacing in the manuscript. Typst's
-      // default leading of 0.65em reads like single spacing; 0.9em with
-      // 12pt body lands at the 1.5-line look of the LaTeX manuscript.
-      leading: 0.9em,
+      // Merkblatt asks for 1.5 line spacing in the manuscript. 0.8em with
+      // 12pt body gives the 17.9pt baseline pitch of LaTeX's onehalf
+      // spacing measured in the Hefte.
+      leading: 0.8em,
       par-spacing: 1.4em,
+      // LaTeX \huge, \Large, and \large at 12pt, as in the Hefte.
       h1-size: 24pt,
-      h2-size: 14pt,
-      h3-size: 12pt,
+      h2-size: 17.28pt,
+      h3-size: 14.4pt,
       h4-size: 12pt,
-      h1-above: 2cm,
-      h1-below: 1.5cm,
-      corner-size: 9pt,
+      h1-above: 2.4cm,
+      h1-below: 1.2cm,
+      h2-below: 7mm,
+      corner-size: 11pt,
     )
   }
 }
 
-// Build the header and footer used on body pages. Two-sided.
-// Returns a dictionary suitable for `set page(header: ..., footer: ...)`.
-#let two-sided-header-footer(language: "english", corner-size: 9pt) = {
+// Running header as in the IWS Hefte. Page number in the outer corner,
+// the current section on recto pages and the current chapter on verso
+// pages centered, a thin rule below. No header on chapter opening pages
+// and on blank pages before a chapter. Front-matter chapter pages show
+// their Roman number at the bottom outer corner, main-matter chapter
+// pages show none, both as in the Hefte.
+//
+// Blank pages are found through <ls3-chapter-end> markers, which the
+// chapter heading rule places at the end of the previous content. A page
+// right before a chapter page is blank if that content ended earlier.
+#let _heading-text(hd) = {
+  if hd.numbering == none { return hd.body }
+  let nums = counter(heading).at(hd.location())
+  [#numbering(hd.numbering, ..nums)#h(0.6em)#hd.body]
+}
+
+#let two-sided-header-footer(language: "english", corner-size: 11pt) = {
   let header-content = context {
-    let here = here()
-    let chapter-title = ""
-    let candidates = query(selector(heading.where(level: 1)).before(here))
-    if candidates.len() > 0 {
-      chapter-title = candidates.last().body
+    let p = here().page()
+    if page.numbering == none { return }
+    let chapters = query(heading.where(level: 1))
+    if chapters.any(c => c.location().page() == p) { return }
+    let next = chapters.find(c => c.location().page() == p + 1)
+    if next != none {
+      let ends = query(selector(<ls3-chapter-end>).before(next.location()))
+        .filter(m => m.location().page() < p + 1)
+      if ends.len() > 0 and ends.last().location().page() < p { return }
     }
-    set text(size: corner-size, fill: colors.anthrazit)
-    if calc.odd(here.page()) {
-      align(right, chapter-title)
-    } else {
-      align(left, chapter-title)
+    let previous = chapters.filter(c => c.location().page() <= p)
+    if previous.len() == 0 { return }
+    let chapter = previous.last()
+    let title = _heading-text(chapter)
+    if calc.odd(p) {
+      let sections = query(selector(heading.where(level: 2)).after(chapter.location()))
+        .filter(s => s.location().page() <= p)
+      if sections.len() > 0 { title = _heading-text(sections.last()) }
     }
+    let number = counter(page).display(page.numbering)
+    set text(size: corner-size)
+    set par(justify: false)
+    block(width: 100%, stroke: (bottom: 0.4pt), inset: (bottom: 1.5mm))[
+      #grid(
+        columns: (1fr, auto, 1fr),
+        align: (left, center, right),
+        if calc.odd(p) { [] } else { number },
+        title,
+        if calc.odd(p) { number } else { [] },
+      )
+    ]
   }
 
   let footer-content = context {
-    if page.numbering == none {
-      return
-    }
-    set text(size: corner-size, fill: colors.anthrazit)
-    let counter-val = counter(page).get().first()
-    let formatted = numbering(page.numbering, counter-val)
-    if calc.odd(here().page()) {
-      align(right, formatted)
-    } else {
-      align(left, formatted)
-    }
+    let p = here().page()
+    if page.numbering != "I" { return }
+    if not query(heading.where(level: 1)).any(c => c.location().page() == p) { return }
+    set text(size: corner-size)
+    align(if calc.odd(p) { right } else { left }, counter(page).display(page.numbering))
   }
 
   (header: header-content, footer: footer-content)
 }
 
 // Apply all global dissertation styling. body-font is "sans" (default,
-// TeX Gyre Heros) or "serif" (New Computer Modern body, sans headings).
+// TeX Gyre Heros throughout) or "serif" (New Computer Modern body with
+// sans headings, as in most IWS Hefte).
 // heading-rule draws a thin mittelblau rule below every chapter-level heading.
 #let apply-style(body, paper: "a4", body-font: "sans", heading-rule: false) = {
   let m = metrics(paper)
@@ -95,12 +133,13 @@
     paper: m.paper,
     margin: m.margin,
     binding: left,
+    header-ascent: m.header-ascent,
   )
 
-  // Only the first serif family. New Computer Modern ships with Typst,
-  // and the Latin Modern fallback in common.typ would warn wherever it
-  // is not installed, typst.app included.
-  let body-font-stack = if body-font == "serif" { fonts.serif.first() } else { fonts.sans }
+  // New Computer Modern ships with Typst. The shared serif stack also
+  // names Latin Modern Roman, which warns on every build where it is not
+  // installed.
+  let body-font-stack = if body-font == "serif" { "New Computer Modern" } else { fonts.sans }
   set text(font: body-font-stack, size: m.body-size)
   show heading: set text(font: fonts.sans)
   set par(leading: m.leading, justify: true, first-line-indent: 0pt, spacing: m.par-spacing)
@@ -109,13 +148,10 @@
   set list(indent: 1em)
   set terms(indent: 1em)
 
-  // Wire up the two-sided footer so outer-corner page numbers appear.
-  // Header is disabled for now (set to none); the running chapter title
-  // header is implemented in two-sided-header-footer() and can be enabled
-  // by passing the .header field to set page(header: ...) here, or by
-  // wiring in the hydra package for richer context-aware headers later.
+  // Running header with the page number, footer only on front-matter
+  // chapter pages.
   let hf = two-sided-header-footer(corner-size: m.corner-size)
-  set page(header: none, footer: hf.footer)
+  set page(header: hf.header, footer: hf.footer)
 
   set heading(numbering: (..nums) => nums.pos().map(str).join("."))
   set math.equation(numbering: "(1)")
@@ -137,6 +173,8 @@
   // thin mittelblau rule below. The spacing to the text is the same with
   // and without the rule.
   show heading.where(level: 1): it => {
+    // Marks where the previous content ended, see the header.
+    [#metadata(none) <ls3-chapter-end>]
     pagebreak(to: "odd", weak: true)
     v(m.h1-above)
     let prefix = if it.numbering != none {
@@ -161,7 +199,7 @@
   show heading.where(level: 2): it => {
     v(8mm, weak: true)
     text(size: m.h2-size, weight: "bold", fill: black, it)
-    v(2mm)
+    v(m.h2-below)
   }
   show heading.where(level: 3): it => {
     v(5mm, weak: true)

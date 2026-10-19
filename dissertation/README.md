@@ -115,7 +115,7 @@ dissertation carries no license obligations.
 ### 0.1.0
 
 First release on Typst Universe. A4 manuscript and A5 print from one
-source, title page per Anlage 1 of the Promotionsordnung, front matter
-in the order of the IWS Mitteilungshefte, and the VLB/D93 page for the
-printed Heft. Code listings use codly 2.0.0, so the template needs
+source, title page per Anlage 1 of the Promotionsordnung, and the
+VLB/D93 page for the printed Heft. Page layout, running header, title
+page, and front matter order follow the IWS Mitteilungshefte. Code listings use codly 2.0.0, so the template needs
 Typst 0.15.0 or newer.

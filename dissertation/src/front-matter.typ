@@ -4,6 +4,8 @@
 // Erklärung, abbreviations, notation, table of contents, and the
 // conditional lists of figures, tables, and listings.
 
+#import "common.typ": fonts
+
 // Localized strings.
 #let _labels(language) = {
   if language == "german" {
@@ -81,8 +83,8 @@
   body
 }
 
-// Table of contents. Level-1 entries bold without dotted leader,
-// deeper levels default. Same look as the thesis TOC.
+// Table of contents. Level-1 entries sans bold without dotted leader,
+// as in the IWS Hefte, deeper levels default.
 #let toc(language: "english") = {
   let labels = _labels(language)
   heading(level: 1, numbering: none, outlined: false)[#labels.contents]
@@ -93,7 +95,7 @@
     v(1.5em, weak: true)
     link(
       it.element.location(),
-      strong[
+      text(font: fonts.sans, weight: "bold")[
         #it.prefix() #it.element.body
         #h(1fr)
         #it.page()

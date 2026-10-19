@@ -59,7 +59,8 @@
 //                   it with the submitted copies, and none of the
 //                   published IWS Hefte 286 to 319 contains one.
 //   bib             none, or a pre-constructed bibliography(...) element
-//   body-font       "sans" (default) or "serif"
+//   body-font       "sans" (default) or "serif" (New Computer Modern, as
+//                   in most IWS Hefte)
 //   heading-rule    false (default), or true for a thin mittelblau rule
 //                   below every chapter-level heading
 
@@ -179,7 +180,7 @@
   // abbreviations, notation, English abstract, German Zusammenfassung,
   // then the optional extended summary in the other language.
   [
-    #set page(numbering: "i")
+    #set page(numbering: "I")
     #if danksagung != none { danksagung-section(danksagung, language: language) }
     #if declaration { erklaerung-section() }
     #toc(language: language)
@@ -197,7 +198,9 @@
     }
   ]
 
-  // Main matter. Arabic numbering restarting at 1.
+  // Main matter. Arabic numbering restarting at 1. The marker tells the
+  // header that a blank page before chapter 1 is blank.
+  [#metadata(none) <ls3-chapter-end>]
   pagebreak(to: "odd")
   [
     #set page(numbering: "1")
