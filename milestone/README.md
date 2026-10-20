@@ -41,6 +41,8 @@ The University of Stuttgart logo ships with the package and appears on
 the title page without any setup. The title page crops the official
 logo, drops the "Germany" line of the English version, and sets the
 institute and department below it from `institute` and `chair`.
+The University of Stuttgart permitted bundling its logo with this
+template. The logo is covered by neither package license, see `LICENSE`.
 
 Pass `university-logo: none` to leave it out. A replacement must be one
 of the official PDFs from the
