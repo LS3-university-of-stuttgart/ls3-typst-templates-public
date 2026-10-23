@@ -3,15 +3,16 @@
 Public [Typst](https://typst.app) templates of the Department of
 Stochastic Simulation and Safety Research for Hydrosystems, LS3, at the
 Institute for Modelling Hydraulic and Environmental Systems, University
-of Stuttgart. Each template is published on
-[Typst Universe](https://typst.app/universe) as its own package with its
-own version.
+of Stuttgart. Each template is its own package with its own version.
+The thesis and dissertation templates are published on
+[Typst Universe](https://typst.app/universe). The milestone report is
+only available from this repository.
 
 | Template | Package | Purpose |
 | --- | --- | --- |
 | [thesis](thesis/) | `@preview/ls3-uni-stuttgart-thesis` | Bachelor's or master's thesis, German or English |
 | [dissertation](dissertation/) | `@preview/ls3-uni-stuttgart-dissertation` | Doctoral dissertation, A4 manuscript or A5 print |
-| [milestone](milestone/) | `@preview/ls3-uni-stuttgart-milestone` | PhD milestone report, German or English |
+| [milestone](milestone/) | not on Typst Universe | PhD milestone report, German or English |
 
 [<img src="thesis/thumbnail.png" alt="Thesis cover" height="300">](thesis/)
 [<img src="dissertation/thumbnail.png" alt="Dissertation title page" height="300">](dissertation/)
@@ -25,8 +26,10 @@ the package name. On your own machine, run
 ```bash
 typst init @preview/ls3-uni-stuttgart-thesis:0.1.0 my-thesis
 typst init @preview/ls3-uni-stuttgart-dissertation:0.1.0 my-dissertation
-typst init @preview/ls3-uni-stuttgart-milestone:0.1.0 my-milestone
 ```
+
+The milestone report needs a clone of this repository, see
+[its README](milestone/README.md#start-a-report).
 
 Each template's README explains its parameters. The thesis includes the
 University of Stuttgart and LS3 logos, the milestone report the

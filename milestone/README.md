@@ -10,15 +10,29 @@ bibliography.
 
 ## Start a report
 
-In the typst.app web app, choose "Start from template" and search for
-`ls3-uni-stuttgart-milestone`. On your own machine, run
+The template is not published on Typst Universe, so the typst.app
+"Start from template" dialog does not list it. On your own machine,
+clone this repository, link its packages, and create a report from the
+local copy.
 
 ```bash
-typst init @preview/ls3-uni-stuttgart-milestone:0.1.0 my-milestone
+git clone https://github.com/LS3-university-of-stuttgart/ls3-typst-templates-public.git
+cd ls3-typst-templates-public
+./scripts/dev-link.sh
+typst init --package-path .dev/packages @preview/ls3-uni-stuttgart-milestone:0.1.0 ../my-milestone
+```
+
+The report's `@preview` import resolves only through the clone, so
+pass the same package path whenever you compile.
+
+```bash
+cd ../my-milestone
+typst watch --package-path ../ls3-typst-templates-public/.dev/packages main.typ
 ```
 
 Then open `main.typ`, fill in your metadata, and write your chapters in
-`chapters/`.
+`chapters/`. If you would like to see the template on Typst Universe,
+open an issue in this repository.
 
 ## Other departments
 
@@ -91,7 +105,7 @@ report carries no license obligations.
 
 ### 0.1.0
 
-First release on Typst Universe. The University of Stuttgart logo is
+First release. The University of Stuttgart logo is
 bundled and can be replaced or left out with `university-logo`. The
 title page crops the official logo and sets the institute and chair
 lines in Typst, so other departments can set their own. Code listings
