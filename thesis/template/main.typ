@@ -1,4 +1,4 @@
-#import "@preview/ls3-uni-stuttgart-thesis:0.1.0": thesis
+#import "@preview/ls3-uni-stuttgart-thesis:0.1.1": thesis
 #import "@preview/abbr:0.3.1"
 
 // Define every abbreviation once. The first time each appears in the text,
@@ -32,9 +32,17 @@
   abbreviations: include "front-matter/abbreviations.typ",
   notation: include "front-matter/notation.typ",
   bib: bibliography("references.bib", style: "apa"),
+  // Set an entry to true to tick its box in the declaration.
   ai-tools: (
-    statements: (informed: true, verified: true, responsible: true),
-    activities: (writing: true, coding: true),
+    statements: (informed: false, verified: false, responsible: false),
+    activities: (
+      ideation: false,
+      literature: false,
+      coding: false,
+      interpretation: false,
+      writing: false,
+      presentation: false,
+    ),
   ),
 )
 
