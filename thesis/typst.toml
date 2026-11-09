@@ -1,6 +1,6 @@
 [package]
 name = "ls3-uni-stuttgart-thesis"
-version = "0.1.0"
+version = "0.1.1"
 entrypoint = "lib.typ"
 authors = ["LS3, University of Stuttgart", "Philipp Hofmann <@phil-c137>"]
 license = "MIT AND MIT-0"

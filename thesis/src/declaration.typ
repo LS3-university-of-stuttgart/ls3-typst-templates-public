@@ -9,18 +9,21 @@
     (
       title: "Selbstständigkeitserklärung",
       paragraph-1: [
-        Hiermit versichere ich, dass ich diese Arbeit selbstständig verfasst und keine
-        anderen als die angegeben Hilfsmittel benutzt habe. Alle Stellen dieser Arbeit,
-        die dem Wortlaut, dem Sinn oder der Argumentation nach anderen Werken entnommen
-        sind, habe ich unter Angabe der Quellen vollständig kenntlich gemacht.
+        Hiermit erkläre ich, dass ich die vorliegende Arbeit (bzw. bei einer
+        Gruppenarbeit meinen entsprechend gekennzeichneten Anteil der Arbeit) selbständig
+        verfasst habe, dass ich keine anderen als die angegebenen Quellen benutzt und
+        alle wörtlich oder sinngemäß aus anderen Werken übernommenen Aussagen als solche
+        gekennzeichnet habe, dass die eingereichte Arbeit weder vollständig noch in
+        wesentlichen Teilen Gegenstand eines anderen Prüfungsverfahrens gewesen ist, dass
+        ich die Arbeit weder vollständig noch in Teilen bereits veröffentlicht habe und
+        dass das elektronische Exemplar mit den anderen Exemplaren übereinstimmt.
       ],
       paragraph-2: [
-        Die Arbeit wurde in dieser oder ähnlicher Form keiner anderen Prüfungsbehörde
-        als Prüfungsleistung vorgelegt.
-      ],
-      paragraph-3: [
-        Die abgegebene elektronische Fassung ist identisch mit der gedruckten Fassung
-        der Arbeit.
+        Zusätzlich versichere ich, dass ich KI-gestützte Tools (z.#sym.space.nobreak.narrow;B. zur
+        Texterstellung, Sprachkorrektur oder inhaltlichen Unterstützung) nur in einem
+        zulässigen Rahmen genutzt habe. Der Einsatz und sein Umfang sind in den folgenden
+        Tabellen dokumentiert und beeinträchtigen nicht die Eigenständigkeit meiner
+        wissenschaftlichen Arbeit.
       ],
       ai-tools-header-1: "Verantwortungsvoller Umgang mit generativen KI-Tools (Large Language Models)",
       ai-tools-header-2: "Detaillierte Tätigkeiten, für die generative KI-Tools (Large Language Models) genutzt wurden",
@@ -35,16 +38,20 @@
     (
       title: "Author declaration",
       paragraph-1: [
-        I declare that I have developed and written the enclosed thesis completely by
-        myself and that I have not used sources or means without declaration in the
-        text. Any thoughts from others or literal quotations are clearly marked.
+        I hereby declare that I have written the present work independently (or, in the
+        case of a group work, my correspondingly marked portion of the work), that I have
+        not used any sources other than those specified and that all statements taken
+        verbatim or meaningfully from other works have been marked as such, that the
+        submitted work has not been completely or partially the subject of another
+        examination procedure, that I have not published the work either completely or in
+        part, and that the electronic copy coincides exactly with the other copies.
       ],
       paragraph-2: [
-        The thesis was not used in the same or in a similar version to achieve an
-        academic grading or is being published elsewhere.
-      ],
-      paragraph-3: [
-        The enclosed electronic version is identical to the printed versions.
+        In addition, I certify that I have only used AI-supported tools (e.g., for text
+        generation, proofreading or content-level input) within permissible limits. I
+        have documented whether and to what extent I have used AI tools in the tables
+        below and certify that this does not compromise the originality of my academic
+        work.
       ],
       ai-tools-header-1: "Responsible use of AI Tools (Large Language Models)",
       ai-tools-header-2: "Detailed activities for which generative AI tools (Large Language Models) were used",
@@ -220,8 +227,6 @@
   t.paragraph-1
   parbreak()
   t.paragraph-2
-  parbreak()
-  t.paragraph-3
 
   v(8mm)
 
@@ -245,8 +250,7 @@
   v(4mm)
 
   // Section 2. Detailed activities (6-row activities table).
-  text(weight: "bold")[#t.ai-tools-header-2]
-  v(2mm)
+  block(sticky: true, below: 2mm, text(weight: "bold")[#t.ai-tools-header-2])
 
   let activity-row(key) = {
     let act = acts.at(key)
@@ -258,7 +262,11 @@
     )
   }
 
-  table(
+  // Slightly smaller text keeps the signature on the same page as the table.
+  {
+    set text(size: 0.9em)
+    set table.cell(breakable: false)
+    table(
     columns: (3.5cm, 1fr, 2cm),
     align: (left, left, center),
     stroke: 0.5pt,
@@ -274,7 +282,8 @@
     ..activity-row("interpretation"),
     ..activity-row("writing"),
     ..activity-row("presentation"),
-  )
+    )
+  }
 
   v(2cm)
 
