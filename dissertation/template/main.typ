@@ -1,4 +1,4 @@
-#import "@preview/ls3-uni-stuttgart-dissertation:0.1.0": dissertation
+#import "@preview/ls3-uni-stuttgart-dissertation:0.1.1": dissertation
 #import "@preview/abbr:0.3.1"
 
 // Define every abbreviation once. First use expands to the long form

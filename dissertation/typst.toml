@@ -1,8 +1,8 @@
 [package]
 name = "ls3-uni-stuttgart-dissertation"
-version = "0.1.0"
+version = "0.1.1"
 entrypoint = "lib.typ"
-authors = ["LS3, University of Stuttgart", "Philipp Hofmann <@phil-c137>"]
+authors = ["LS3, University of Stuttgart", "Philipp Hofmann <@philipphofmann>"]
 license = "MIT AND MIT-0"
 description = "Doctoral dissertation at LS3, University of Stuttgart, as A4 manuscript or A5 print."
 keywords = ["dissertation", "doctoral thesis", "PhD", "Dr.-Ing.", "Promotion", "Doktorarbeit", "LS3", "University of Stuttgart", "Universität Stuttgart", "hydrosystems"]

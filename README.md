@@ -24,8 +24,8 @@ In the typst.app web app, choose "Start from template" and search for
 the package name. On your own machine, run
 
 ```bash
-typst init @preview/ls3-uni-stuttgart-thesis:0.1.0 my-thesis
-typst init @preview/ls3-uni-stuttgart-dissertation:0.1.0 my-dissertation
+typst init @preview/ls3-uni-stuttgart-thesis:0.1.2 my-thesis
+typst init @preview/ls3-uni-stuttgart-dissertation:0.1.1 my-dissertation
 ```
 
 The milestone report needs a clone of this repository, see

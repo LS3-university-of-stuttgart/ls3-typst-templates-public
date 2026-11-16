@@ -1,4 +1,4 @@
-#import "@preview/ls3-uni-stuttgart-thesis:0.1.1": thesis
+#import "@preview/ls3-uni-stuttgart-thesis:0.1.2": thesis
 #import "@preview/abbr:0.3.1"
 
 // Define every abbreviation once. The first time each appears in the text,
