@@ -15,7 +15,7 @@ In the typst.app web app, choose "Start from template" and search for
 `ls3-uni-stuttgart-dissertation`. On your own machine, run
 
 ```bash
-typst init @preview/ls3-uni-stuttgart-dissertation:0.1.0 my-dissertation
+typst init @preview/ls3-uni-stuttgart-dissertation:0.1.1 my-dissertation
 ```
 
 Then open `main.typ`, fill in your metadata, and write your chapters in
@@ -111,6 +111,11 @@ which `typst init` copies into your project, are under MIT-0, so your
 dissertation carries no license obligations.
 
 ## Changelog
+
+### 0.1.1
+
+The package metadata lists the author's current GitHub handle,
+`@philipphofmann`. The template itself is unchanged.
 
 ### 0.1.0
 

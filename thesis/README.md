@@ -13,7 +13,7 @@ In the typst.app web app, choose "Start from template" and search for
 `ls3-uni-stuttgart-thesis`. On your own machine, run
 
 ```bash
-typst init @preview/ls3-uni-stuttgart-thesis:0.1.1 my-thesis
+typst init @preview/ls3-uni-stuttgart-thesis:0.1.2 my-thesis
 ```
 
 Then open `main.typ`, fill in your metadata, and write your chapters in
@@ -31,7 +31,7 @@ To use a different logo, pass your own file from the project. Pass
 `none` to leave a logo out.
 
 ```typst
-#import "@preview/ls3-uni-stuttgart-thesis:0.1.1": thesis
+#import "@preview/ls3-uni-stuttgart-thesis:0.1.2": thesis
 
 #show: thesis.with(
   chair-logo: image("my_logo.png"),
@@ -53,7 +53,7 @@ web app has it built in. On your own machine, install it from
 with `sans-font`. Liberation Sans is a close match.
 
 ```typst
-#import "@preview/ls3-uni-stuttgart-thesis:0.1.1": thesis
+#import "@preview/ls3-uni-stuttgart-thesis:0.1.2": thesis
 
 #show: thesis.with(sans-font: "Liberation Sans", /* ... */)
 ```
@@ -90,6 +90,11 @@ which `typst init` copies into your project, are under MIT-0, so your
 thesis carries no license obligations.
 
 ## Changelog
+
+### 0.1.2
+
+The package metadata lists the author's current GitHub handle,
+`@philipphofmann`. The template itself is unchanged.
 
 ### 0.1.1
 
